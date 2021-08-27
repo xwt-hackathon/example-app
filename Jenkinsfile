@@ -1,12 +1,23 @@
 podTemplate(containers: [
-    containerTemplate(name: 'hack-agent', image: 'public.ecr.aws/p2j7w3g3/hack-agent:1', command: 'sleep', args: '99d')
+    containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:latest', volume:[secretVolume( mountPath:"/root/.aws", secretName: "aws-secret")] command: 'sleep')
   ]) {
       node() {
           stage('test') {
-            container('hack-agent') {
-                stage('Build a Go project') {
-                    sh '''
-                    echo "HI"
+            container('kaniko') {
+                stage('Build a Kaniko image') {
+                    environment {
+                        DOCKERFILE  = "Dockerfile"
+                        GITREPO     = "git://github.com/xwt-hackathon/example-app.git"
+                        CONTEXT     = "/workspace"
+                        REGISTRY    = '404458385382.dkr.ecr.us-west-2.amazonaws.com/kaniko-test'
+                        IMAGE       = 'kaniko-test'
+                        TAG         = 'latest'
+                    }
+                    sh '''#!/busybox/sh
+                    /kaniko/executor \\
+                    --context=\${GITREPO} \\
+                    --dockerfile=\${DOCKERFILE} \\
+                    --destination=\${REGISTRY}/\${IMAGE}:\${TAG}
                     '''
                 }
             }
