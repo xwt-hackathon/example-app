@@ -1,9 +1,9 @@
 podTemplate(containers: [
-    containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:latest', volume:[secretVolume( mountPath:"/root/.aws", secretName: "aws-secret")] command: 'sleep')
+    containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:latest', volume:[secretVolume( mountPath:"/root/.aws", secretName: "aws-secret")] command: '/busybox/cat')
   ]) {
       node() {
           stage('test') {
-            container('kaniko') {
+            container('kaniko', shell: '/busybox/sh') {
                 stage('Build a Kaniko image') {
                     environment {
                         DOCKERFILE  = "Dockerfile"
