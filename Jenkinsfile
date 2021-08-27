@@ -3,7 +3,7 @@ podTemplate(containers: [
     volumes:[secretVolume( mountPath:"/root/.aws", secretName: "aws-secret")]) {
       node() {
           stage('test') {
-            container('kaniko', shell: '/busybox/sh') {
+            container('kaniko') {
                 stage('Build a Kaniko image') {
                     environment {
                         DOCKERFILE  = "Dockerfile"
