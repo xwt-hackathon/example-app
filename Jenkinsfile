@@ -5,8 +5,9 @@ podTemplate(containers: [
           stage('test') {
             container('kaniko') {
                 stage('Say Hi') {
-                    sh 'echo "Hello World!"'
+                    sh'echo "Hello World!"'
             }
         }
       }
+    }
 }
