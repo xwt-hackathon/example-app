@@ -17,7 +17,8 @@ podTemplate(containers: [
                     /kaniko/executor \\
                     --context=\${GITREPO} \\
                     --dockerfile=\${DOCKERFILE} \\
-                    --destination=\${REGISTRY}/\${IMAGE}:\${TAG}
+                    --destination=\${REGISTRY}/\${IMAGE}:\${TAG} \\
+                    --verbosity
                     '''
                 }
             }
