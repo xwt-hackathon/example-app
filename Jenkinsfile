@@ -15,7 +15,7 @@ podTemplate(containers: [
                     }
                     sh '''#!/busybox/sh
                     /kaniko/executor \\
-                    --context=\${GITREPO} \\
+                    --context=`pwd` \\
                     --dockerfile=\${DOCKERFILE} \\
                     --destination=\${REGISTRY}/\${IMAGE}:\${TAG} \\
                     --verbosity
