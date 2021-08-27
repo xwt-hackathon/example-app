@@ -1,12 +1,7 @@
-podTemplate(containers: [
-    containerTemplate(name: 'golang', image: 'golang:1.16.5', command: 'sleep', args: '99d')]) {
+podTemplate() {
       node() {
-          stage('test') {
-            container('golang') {
-                stage('Say Hi') {
+          stage('Say Hi') {
                     sh'echo "Hello World!"'
             }
-        }
       }
-    }
 }
